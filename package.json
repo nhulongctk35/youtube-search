@@ -4,7 +4,8 @@
   "description": "Search for youtube videos",
   "main": "index.js",
   "scripts": {
-    "test": "standard && node tests/test-*.js"
+    "test": "standard && node tests/test-*.js",
+    "lint-fix": "standard --fix"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,7 @@
   "author": "Max Gfeller <max.gfeller@gmail.com>",
   "license": "BSD",
   "dependencies": {
+    "request": "^2.57.0",
     "axios": "^0.18.0",
     "xml2js": "~0.2.8"
   },

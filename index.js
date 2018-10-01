@@ -1,5 +1,6 @@
 var querystring = require('querystring')
-var axios = require('axios')
+var RestClient = require('./services/RestClient')
+const searchService = new RestClient()
 
 var allowedProperties = [
   'fields',
@@ -61,10 +62,13 @@ module.exports = function search (term, opts, cb) {
     if (allowedProperties.indexOf(k) > -1) params[k] = opts[k]
   })
 
-  axios.get('https://www.googleapis.com/youtube/v3/search?' + querystring.stringify(params))
-    .then(function (response) {
-      var result = response.data
-
+  searchService
+    .get(
+      `https://www.googleapis.com/youtube/v3/search?${querystring.stringify(
+        params
+      )}`
+    )
+    .then(result => {
       var pageInfo = {
         totalResults: result.pageInfo.totalResults,
         resultsPerPage: result.pageInfo.resultsPerPage,
@@ -105,7 +109,5 @@ module.exports = function search (term, opts, cb) {
 
       return cb(null, findings, pageInfo)
     })
-    .catch(function (err) {
-      return cb(err)
-    })
+    .catch(error => cb(error))
 }
